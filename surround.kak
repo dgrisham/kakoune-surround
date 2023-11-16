@@ -129,7 +129,7 @@ define-command -hidden _change-surrounding-pair -params 1 %{ eval %sh{
 		}
 	}"
 }}
-define-command -hidden -params 2 _change-surround %{ execute-keys "r%arg{1}<space>r%arg{2}" }
+define-command -hidden -params 2 _change-surround %{ execute-keys "r%arg{1},r%arg{2}" }
 
 #use evaluate-commands to collapse undo history
 define-command surround-with-tag %{ evaluate-commands %{
@@ -162,7 +162,7 @@ define-command -hidden _activate-hooks-tag-attribute-handler %{
 	hook -group surround-tag-attribute-handler window RawKey '<space>' %{
 		execute-keys '<backspace>'
 		_keep-odds
-		execute-keys '<space>'
+		execute-keys ','
 		remove-hooks window surround-tag-attribute-handler
 	}
 	hook -group surround-tag-attribute-handler window ModeChange insert:normal %{
@@ -191,8 +191,8 @@ define-command -hidden _keep-odds %{ eval %sh{
 #use evaluate-commands to restore mark
 define-command -hidden _select-surrounding-tag-including-space %{ evaluate-commands %{
 	_select-boundary-of-surrounding-tag
-	execute-keys -save-regs '' 'Z<space><a-a>c\\s*<lt>/,><ret><a-Z>a'
-	execute-keys -save-regs '' 'z(<space><a-a>c<lt>,>\\h*\\n?<ret>'
+	execute-keys -save-regs '' 'Z,<a-a>c\\s*<lt>/,><ret><a-Z>a'
+	execute-keys -save-regs '' 'z(,<a-a>c<lt>,>\\h*\\n?<ret>'
 	execute-keys -save-regs '' '<a-z>a'
 }}
 
